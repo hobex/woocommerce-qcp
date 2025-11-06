@@ -11,7 +11,7 @@ require_once( WOOCOMMERCE_GATEWAY_QCP_BASEDIR . 'classes/class-woocommerce-qcp-c
 require_once( WOOCOMMERCE_GATEWAY_QCP_BASEDIR . 'classes/class-woocommerce-qcp-payments.php' );
 
 define( 'WOOCOMMERCE_GATEWAY_QCP_NAME', 'Woocommerce2_QentaCheckoutPage' );
-define( 'WOOCOMMERCE_GATEWAY_QCP_VERSION', '2.1.7' );
+define( 'WOOCOMMERCE_GATEWAY_QCP_VERSION', '2.1.8' );
 define( 'WOOCOMMERCE_GATEWAY_QCP_WINDOWNAME', 'QentaCheckoutPageFrame' );
 define( 'WOOCOMMERCE_GATEWAY_QCP_TABLE_NAME', 'woocommerce_qcp_transaction' );
 
@@ -798,7 +798,7 @@ class WC_Gateway_QCP extends WC_Payment_Gateway {
 			$item->setUnitGrossAmount( $item_unit_gross_amount )
 			     ->setUnitNetAmount( wc_format_decimal( $item_unit_net_amount, wc_get_price_decimals() ) )
 			     ->setUnitTaxAmount( wc_format_decimal( $item_unit_tax_amount, wc_get_price_decimals() ) )
-			     ->setUnitTaxRate( number_format( ( $item_unit_tax_amount / $item_unit_net_amount ), 2, '.', '' ) * 100 )
+			     ->setUnitTaxRate( number_format( ($item_unit_net_amount != 0 ? $item_unit_tax_amount / $item_unit_net_amount : 0 ), 2, '.', '' ) * 100 )
 			     ->setDescription( substr( strip_tags( $cart_item['data']->get_short_description() ), 0, 127 ) )
 			     ->setName( substr( strip_tags( $cart_item['data']->get_name() ), 0, 127 ) )
 			     ->setImageUrl( isset( $image_url ) ? $image_url : '' );
